@@ -1025,13 +1025,7 @@
 
             <div class="divider"></div>
 
-            <strong>Admin: Gallery (Add by URL)</strong>
-            <div class="hint" style="margin-top:6px;">
-              Admin can add gallery photos by URL. Everyone can view.
-              <br>
-              For “same gallery for all users”, host a public JSON file and set <b>PUBLIC_GALLERY_FEED_URL</b> in script.
-            </div>
-
+            
             <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
               <button class="btn" id="addPhotoUrlBtn" type="button">Add Photo URL</button>
               <button class="btn" id="exportGalleryBtn" type="button">Export Gallery (JSON)</button>
@@ -1225,8 +1219,7 @@
     <div class="wrap">
       <div class="kicker">Our Departments</div>
       <h2>Specialities under one trusted hospital</h2>
-      <p class="muted" style="margin-top:10px; max-width: 92ch;">
-        Replace each image file name with your own department photos. (Example: <b>dept-urology.jpg</b>)
+      <p class="muted" style="margin-top:10px; max-width: 92ch;"
       </p>
 
       <div class="tilesGrid">
@@ -1359,14 +1352,11 @@
   <section id="gallery">
     <div class="wrap">
       <div class="kicker">Gallery</div>
-      <h2>Auto-swipe gallery</h2>
-
       <div class="card galleryCard" style="margin-top:16px;">
         <div class="galleryHead">
           <div>
             <strong style="font-size:1.05rem;">Our Gallery</strong>
             <div class="muted" style="margin-top:6px; font-size:.95rem;">
-              Admin can add photos (by URL). Everyone can view.
             </div>
           </div>
 
@@ -1605,7 +1595,7 @@
       const layer = $("#emojiLayer");
       if(!layer) return;
 
-      const emojis = ["🩺","💊","🏥","🧑‍⚕️","👩‍⚕️","🧬","🧫","🩻","🫀","🧠","🦴","🧪","🩹","🚑","📋","🧴"];
+      const emojis = ["🩺","💊","🧑‍⚕️","👩‍⚕️","🧬","🧫","🩻","🫀","🧠","🧪","🩹","🚑","📋","🧴"];
       const count = 56; // 50+
 
       for(let i=0;i<count;i++){
@@ -2236,4 +2226,5 @@
   </script>
 </body>
 </html>
+
 
