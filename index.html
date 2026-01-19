@@ -1,0 +1,2238 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#0aa06e" />
+  <title>Swastik Surgical Hospital | Your Caring Hospital</title>
+
+  <style>
+    :root{
+      --bg:#071313;
+      --card:#0b1e1b;
+      --text:#e9fffb;
+      --muted:#b6d9d2;
+      --line:rgba(255,255,255,.10);
+      --brand:#0aa06e;
+      --brand2:#e23b3b;
+      --brand3:#0bd6a2;
+      --shadow: 0 18px 50px rgba(0,0,0,.45);
+      --shadow2: 0 10px 30px rgba(0,0,0,.35);
+      --radius2: 26px;
+      --max: 1180px;
+      --pad: clamp(14px, 2.5vw, 22px);
+
+      --tickerH: 44px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
+      background:
+        radial-gradient(900px 600px at 15% -10%, rgba(11,214,162,.25), transparent 55%),
+        radial-gradient(900px 600px at 90% 0%, rgba(226,59,59,.18), transparent 55%),
+        radial-gradient(1000px 650px at 60% 110%, rgba(10,160,110,.20), transparent 60%),
+        var(--bg);
+      color: var(--text);
+      overflow-x:hidden;
+      position:relative;
+    }
+
+    /* Best-effort copy protection (NOT perfect; screenshots always possible) */
+    body{
+      -webkit-user-select:none;
+      user-select:none;
+      -webkit-touch-callout:none;
+    }
+    img{ -webkit-user-drag: none; user-drag: none; pointer-events: none; }
+    a, button, input, textarea, select{ pointer-events:auto; }
+    input, textarea{ -webkit-user-select:text; user-select:text; } /* allow typing */
+    textarea, input { caret-color: var(--brand3); }
+
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 var(--pad)}
+    .kicker{color:rgba(255,255,255,.82); font-weight:750; letter-spacing:.18em; text-transform:uppercase; font-size:.78rem}
+    h1,h2,h3{margin:0}
+    h2{font-size: clamp(1.45rem, 2.2vw, 2rem); letter-spacing:.2px}
+    p{margin:0; line-height:1.65}
+    .muted{color:var(--muted)}
+    .divider{height:1px; background:linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent); margin:26px 0}
+
+    /* Floating emoji background */
+    .emojiLayer{
+      position:fixed;
+      inset:0;
+      z-index:0;
+      pointer-events:none;
+      overflow:hidden;
+    }
+    .emoji{
+      position:absolute;
+      width:1cm;
+      height:1cm;
+      font-size:1cm;
+      line-height:1cm;
+      opacity:.08;
+      filter: blur(.1px);
+      transform: translate3d(0,0,0);
+      animation: floaty linear infinite;
+    }
+    @keyframes floaty{
+      0%   { transform: translate3d(0, 0, 0) rotate(0deg); opacity:.06; }
+      50%  { opacity:.10; }
+      100% { transform: translate3d(0, -120vh, 0) rotate(22deg); opacity:.06; }
+    }
+
+    /* Ticker / Runner */
+    .tickerBar{
+      position:sticky; top:0; z-index:85;
+      height: var(--tickerH);
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(10,160,110,.22), rgba(7,19,19,.85));
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+    .tickerWrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding: 0 var(--pad);
+      height: var(--tickerH);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .tickerLeft{
+      display:flex; gap:10px; align-items:center; min-width: 180px;
+    }
+    .tickerPill{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:9px 12px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      box-shadow: 0 10px 30px rgba(0,0,0,.22);
+      font-weight:850;
+      letter-spacing:.2px;
+      white-space:nowrap;
+    }
+    .dot{width:10px; height:10px; border-radius:50%; background:var(--brand); box-shadow:0 0 0 6px rgba(11,214,162,.18)}
+    .tickerText{
+      flex:1;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: 999px;
+      background: rgba(255,255,255,.04);
+      padding: 10px 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.18);
+    }
+    .tickerText span{
+      display:inline-block;
+      white-space:nowrap;
+      font-weight:850;
+      color: rgba(255,255,255,.86);
+    }
+    .tickerRight{display:flex; gap:10px; align-items:center; min-width: 180px; justify-content:flex-end;}
+    .tinyBtn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding: 9px 12px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      font-weight:850;
+      cursor:pointer;
+      white-space:nowrap;
+    }
+
+    /* Announcement bar */
+    .announce{
+      display:none;
+      position:sticky;
+      top: var(--tickerH);
+      z-index:80;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(10,160,110,.24), rgba(7,19,19,.82));
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+    .announce .bar{
+      max-width:var(--max);
+      margin:0 auto;
+      padding: 10px var(--pad);
+      display:flex; gap:10px; align-items:center; justify-content:space-between;
+    }
+    .announce strong{font-size:.95rem}
+    .announce .right{display:flex; gap:10px; align-items:center}
+
+    .pill{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:10px 12px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      box-shadow: 0 10px 30px rgba(0,0,0,.22);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      font-weight:750;
+      letter-spacing:.2px;
+    }
+
+    /* Topbar */
+    .topbar{
+      position:sticky;
+      top: calc(var(--tickerH) + 0px);
+      z-index:70;
+      background:linear-gradient(180deg, rgba(7,19,19,.86), rgba(7,19,19,.55));
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    /* if announce visible, it will sit above topbar due to higher z and sticky top */
+
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 14px var(--pad);
+      max-width:var(--max);
+      margin:0 auto;
+      gap:12px;
+      position:relative;
+      z-index:2;
+    }
+
+    .brand{display:flex; align-items:center; gap:12px; min-width: 220px}
+    .logoMark{
+      width:42px; height:42px; border-radius:14px;
+      background:
+        radial-gradient(14px 14px at 30% 30%, rgba(255,255,255,.22), transparent 60%),
+        radial-gradient(16px 16px at 80% 20%, rgba(255,255,255,.14), transparent 60%),
+        linear-gradient(135deg, rgba(10,160,110,.95), rgba(11,214,162,.72));
+      box-shadow: 0 18px 35px rgba(11,214,162,.16), 0 18px 40px rgba(0,0,0,.45);
+      position:relative;
+      overflow:hidden;
+      display:grid;
+      place-items:center;
+    }
+    .logoMark:before{
+      content:"";
+      position:absolute; inset:-20%;
+      background: radial-gradient(circle at 20% 20%, rgba(226,59,59,.55), transparent 45%);
+      transform: rotate(25deg);
+      opacity:.55;
+    }
+    /* Optional hospital logo image */
+    .logoMark img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      opacity:1;
+      mix-blend-mode: normal;
+      pointer-events:none;
+    }
+
+    .brandTxt{display:flex; flex-direction:column; line-height:1.1}
+    .brandTxt strong{font-size:1.02rem; letter-spacing:.2px}
+    .brandTxt span{font-size:.78rem; color:rgba(255,255,255,.75)}
+
+    .links{
+      display:flex; align-items:center; gap:14px;
+      color:rgba(255,255,255,.88);
+      font-weight:750;
+      font-size:.94rem;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+    .links a{
+      opacity:.9;
+      padding:10px 10px;
+      border-radius:12px;
+      border:1px solid transparent;
+      white-space:nowrap;
+    }
+    .links a:hover{opacity:1; border-color: rgba(255,255,255,.10); background: rgba(255,255,255,.04)}
+    .actions{display:flex; align-items:center; gap:10px}
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      font-weight:800;
+      letter-spacing:.2px;
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      cursor:pointer;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(10,160,110,.95), rgba(11,214,162,.80));
+      border-color: rgba(255,255,255,.14);
+      box-shadow: 0 20px 60px rgba(11,214,162,.20), 0 18px 40px rgba(0,0,0,.38);
+    }
+    .btn.danger{
+      background: linear-gradient(135deg, rgba(226,59,59,.95), rgba(226,59,59,.70));
+      border-color: rgba(255,255,255,.12);
+    }
+    .iconBtn{
+      width:44px; height:44px; border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      display:grid; place-items:center;
+      cursor:pointer;
+      box-shadow: var(--shadow2);
+      position:relative;
+    }
+    .badgeCount{
+      position:absolute;
+      top:-6px; right:-6px;
+      min-width:22px; height:22px;
+      padding:0 6px;
+      border-radius:999px;
+      background: linear-gradient(135deg, rgba(226,59,59,.95), rgba(226,59,59,.70));
+      border:1px solid rgba(255,255,255,.16);
+      display:grid; place-items:center;
+      font-weight:900;
+      font-size:.78rem;
+    }
+    .hamburger{
+      width:44px; height:44px; border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      display:none;
+      place-items:center;
+      cursor:pointer;
+      box-shadow: var(--shadow2);
+    }
+    .hamburger i{
+      width:18px; height:2px; background:rgba(255,255,255,.92);
+      position:relative;
+      border-radius:10px;
+    }
+    .hamburger i:before,.hamburger i:after{
+      content:""; position:absolute; left:0; width:18px; height:2px; border-radius:10px;
+      background:rgba(255,255,255,.92);
+    }
+    .hamburger i:before{top:-6px}
+    .hamburger i:after{top:6px}
+
+    /* Drawer */
+    .drawer{position:fixed; inset:0; z-index:90; display:none}
+    .drawer.show{display:block}
+    .drawer .backdrop{position:absolute; inset:0; background: rgba(0,0,0,.62); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px)}
+    .drawer .panel{
+      position:absolute; top:0; right:0; height:100%; width:min(420px, 92vw);
+      background: linear-gradient(180deg, rgba(11,30,27,.98), rgba(7,19,19,.98));
+      border-left:1px solid rgba(255,255,255,.10);
+      box-shadow: -30px 0 80px rgba(0,0,0,.55);
+      padding: 16px;
+      display:flex; flex-direction:column; gap:14px;
+    }
+    .drawer .panelHeader{display:flex; align-items:center; justify-content:space-between; padding: 4px 2px 10px 2px}
+    .drawer .x{
+      width:44px; height:44px; border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      display:grid; place-items:center; cursor:pointer;
+      position:relative;
+    }
+    .drawer .x:before,.drawer .x:after{
+      content:""; width:18px; height:2px; border-radius:10px; background:rgba(255,255,255,.92);
+      position:absolute;
+    }
+    .drawer .x:before{transform:rotate(45deg)}
+    .drawer .x:after{transform:rotate(-45deg)}
+    .drawer nav{display:flex; flex-direction:column; gap:8px; padding: 6px 0}
+    .drawer nav a{
+      padding: 14px 12px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      font-weight:850;
+    }
+    .drawer .panelFooter{margin-top:auto; display:grid; gap:10px}
+
+    /* Modal */
+    .modal{position:fixed; inset:0; z-index:95; display:none}
+    .modal.show{display:block}
+    .modal .overlay{position:absolute; inset:0; background: rgba(0,0,0,.62); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px)}
+    .modal .box{
+      position:relative;
+      margin: 6vh auto;
+      width: min(980px, 92vw);
+      border-radius: 26px;
+      border:1px solid rgba(255,255,255,.12);
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      overflow:hidden;
+    }
+    .modalHeader{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      padding: 14px 14px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.14);
+    }
+    .modalHeader strong{font-size:1.05rem}
+    .modalBody{padding: 14px}
+    .grid2{display:grid; grid-template-columns: 1.05fr .95fr; gap:12px}
+    .miniCard{
+      border-radius: 20px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.14);
+      padding: 12px;
+    }
+
+    /* Hero */
+    main.hero{
+      position:relative;
+      min-height: clamp(620px, 92vh, 860px);
+      display:flex;
+      align-items:stretch;
+      overflow:hidden;
+      z-index:1;
+    }
+    .heroBg{position:absolute; inset:0; overflow:hidden}
+    .heroBg video{
+      position:absolute; inset:0; width:100%; height:100%;
+      object-fit:cover;
+      filter: saturate(1.05) contrast(1.05) brightness(.72);
+      transform: scale(1.02);
+    }
+    .heroOverlay{
+      position:absolute; inset:0;
+      background:
+        radial-gradient(900px 520px at 30% 30%, rgba(11,214,162,.18), transparent 55%),
+        radial-gradient(900px 520px at 80% 30%, rgba(226,59,59,.14), transparent 55%),
+        linear-gradient(180deg, rgba(7,19,19,.35), rgba(7,19,19,.92));
+    }
+    .heroGrid{
+      position:relative;
+      display:grid;
+      grid-template-columns: 1.25fr .85fr;
+      gap: 22px;
+      align-items: start;
+      padding: 56px var(--pad) 50px var(--pad);
+      max-width: var(--max);
+      margin: 0 auto;
+      width:100%;
+      z-index:2;
+    }
+    .heroTitle{
+      font-size: clamp(2.0rem, 3.7vw, 3.5rem);
+      line-height:1.08;
+      letter-spacing:.2px;
+      text-shadow: 0 18px 40px rgba(0,0,0,.55);
+    }
+    .heroTitle .accent{
+      background: linear-gradient(90deg, rgba(11,214,162,1), rgba(10,160,110,1), rgba(226,59,59,.95));
+      -webkit-background-clip: text; background-clip:text; color:transparent;
+    }
+    .heroDesc{max-width: 62ch; color: rgba(255,255,255,.86); font-size: clamp(1.02rem, 1.15vw, 1.12rem)}
+    .heroBadges{display:flex; flex-wrap:wrap; gap:10px; margin-top:12px}
+    .heroBtns{display:flex; flex-wrap:wrap; gap:10px; margin-top:12px}
+    .heroRight{display:grid; gap:12px; position:sticky; top: calc(var(--tickerH) + 92px)}
+    .infoCard{
+      border-radius: var(--radius2);
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+    .infoRow{
+      display:flex; gap:12px; align-items:flex-start;
+      padding: 10px 10px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.04);
+    }
+    .ico{
+      width:40px; height:40px; border-radius:14px;
+      background: linear-gradient(135deg, rgba(10,160,110,.95), rgba(11,214,162,.75));
+      box-shadow: 0 18px 40px rgba(11,214,162,.18);
+      display:grid; place-items:center;
+      flex:0 0 auto;
+    }
+    .ico.red{background: linear-gradient(135deg, rgba(226,59,59,.95), rgba(226,59,59,.70)); box-shadow: 0 18px 40px rgba(226,59,59,.14)}
+    .ico svg{width:20px; height:20px; opacity:.95}
+    .infoRow strong{display:block; font-size:.96rem}
+    .infoRow span{display:block; font-size:.88rem; color:rgba(255,255,255,.78); margin-top:2px}
+    .infoRow a{font-weight:900; text-decoration:underline; text-underline-offset:3px}
+
+    section{padding: 54px 0; position:relative; z-index:2}
+
+    /* Cards */
+    .card{
+      border-radius: var(--radius2);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      border: 1px solid rgba(255,255,255,.10);
+      box-shadow: var(--shadow2);
+      padding: 18px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      overflow:hidden;
+      position:relative;
+    }
+    .card:before{
+      content:"";
+      position:absolute; inset:-1px;
+      background:
+        radial-gradient(380px 180px at 20% 10%, rgba(11,214,162,.18), transparent 60%),
+        radial-gradient(380px 180px at 90% 0%, rgba(226,59,59,.12), transparent 60%);
+      opacity:.9;
+      pointer-events:none;
+    }
+    .card > *{position:relative}
+
+    /* About: text + mini image cards */
+    .aboutGrid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:14px;
+      margin-top:14px;
+      align-items:start;
+    }
+    .miniImgs{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    .miniImgCard{
+      border-radius: 20px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.14);
+      overflow:hidden;
+      box-shadow: var(--shadow2);
+      position:relative;
+      min-height: 140px;
+    }
+    .miniImgCard img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .miniImgCard .cap{
+      position:absolute;
+      left:10px; bottom:10px;
+      padding:8px 10px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.40);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      font-weight:900;
+      font-size:.9rem;
+    }
+
+    /* Experts (3D card + shadow) */
+    .expertsGrid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:14px;
+      margin-top:16px;
+    }
+    .expert{
+      grid-column: span 6;
+      border-radius: 26px;
+      border:1px solid rgba(255,255,255,.12);
+      background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.03));
+      box-shadow: var(--shadow2);
+      padding: 16px;
+      position:relative;
+      overflow:hidden;
+      transform-style: preserve-3d;
+      perspective: 900px;
+      transition: transform .25s ease, border-color .25s ease;
+    }
+    .expert:hover{
+      transform: translateY(-4px) rotateX(1.2deg) rotateY(-1.2deg);
+      border-color: rgba(11,214,162,.26);
+    }
+    .expert:before{
+      content:"";
+      position:absolute; inset:-1px;
+      background:
+        radial-gradient(320px 180px at 15% 20%, rgba(11,214,162,.18), transparent 62%),
+        radial-gradient(320px 180px at 90% 10%, rgba(226,59,59,.12), transparent 62%);
+      opacity:.9; pointer-events:none;
+    }
+    .expert > *{position:relative}
+    .expertTop{
+      display:flex; gap:14px; align-items:center;
+    }
+    .photo{
+      width:88px; height:88px; border-radius:50%;
+      border: 3px solid rgba(255,255,255,.16);
+      background:
+        radial-gradient(18px 18px at 25% 25%, rgba(255,255,255,.25), transparent 60%),
+        linear-gradient(135deg, rgba(10,160,110,.95), rgba(11,214,162,.72));
+      overflow:hidden;
+      box-shadow: 0 18px 40px rgba(0,0,0,.35);
+      flex: 0 0 auto;
+      display:grid; place-items:center;
+      font-weight:950;
+      letter-spacing:.06em;
+    }
+    .photo img{width:100%; height:100%; object-fit:cover; display:block}
+    .expert h3{font-size:1.18rem}
+    .expert .qual{margin-top:4px; color:rgba(255,255,255,.86); font-weight:850}
+    .bullets{margin-top:12px; display:grid; gap:8px}
+    .b{
+      display:flex; gap:10px; align-items:flex-start;
+      padding:10px 12px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.12);
+    }
+    .b .mark{
+      width:10px; height:10px; border-radius:50%;
+      background: var(--brand);
+      box-shadow:0 0 0 6px rgba(11,214,162,.16);
+      margin-top:6px;
+      flex:0 0 auto;
+    }
+    .b span{color:rgba(255,255,255,.82); font-weight:700; font-size:.95rem; line-height:1.45}
+
+    /* Departments + Facilities */
+    .tilesGrid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:14px;
+      margin-top:16px;
+    }
+    .tile{
+      grid-column: span 4;
+      border-radius: 26px;
+      border:1px solid rgba(255,255,255,.12);
+      background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.03));
+      box-shadow: var(--shadow2);
+      overflow:hidden;
+      position:relative;
+      transform-style: preserve-3d;
+      perspective: 900px;
+      transition: transform .25s ease, border-color .25s ease;
+    }
+    .tile:hover{
+      transform: translateY(-4px) rotateX(1deg) rotateY(-1deg);
+      border-color: rgba(11,214,162,.26);
+    }
+    .tileMedia{
+      height: 170px;
+      position:relative;
+      background:
+        radial-gradient(240px 140px at 20% 30%, rgba(11,214,162,.30), transparent 62%),
+        radial-gradient(240px 140px at 85% 30%, rgba(226,59,59,.18), transparent 62%),
+        linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+      overflow:hidden;
+    }
+    .tileMedia img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .tileBody{
+      padding: 14px;
+      position:relative;
+    }
+    .tileBody strong{
+      display:block;
+      font-size: 1.05rem;
+      letter-spacing:.2px;
+    }
+    .tileBody .desc{
+      margin-top:6px;
+      color: rgba(255,255,255,.78);
+      font-size:.95rem;
+      line-height:1.55;
+    }
+    .tagRow{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
+    .tag{
+      display:inline-flex;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.14);
+      font-weight:850;
+      font-size:.85rem;
+      color: rgba(255,255,255,.84);
+    }
+
+    /* Gallery */
+    .galleryCard{padding:0}
+    .galleryHead{
+      padding:18px;
+      display:flex; align-items:flex-end; justify-content:space-between; gap:14px;
+    }
+    .galleryTools{display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:flex-end}
+    .strip{
+      display:flex; gap:12px; padding: 0 14px 14px 14px;
+      overflow:auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+    .strip::-webkit-scrollbar{height:10px}
+    .strip::-webkit-scrollbar-thumb{background: rgba(255,255,255,.12); border-radius:999px}
+    .ph{
+      scroll-snap-align: start;
+      min-width: clamp(240px, 52vw, 420px);
+      height: clamp(180px, 34vw, 300px);
+      border-radius: 22px;
+      border:1px solid rgba(255,255,255,.12);
+      background:
+        radial-gradient(220px 140px at 20% 30%, rgba(11,214,162,.30), transparent 62%),
+        radial-gradient(220px 140px at 85% 30%, rgba(226,59,59,.18), transparent 62%),
+        linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+      position:relative;
+      overflow:hidden;
+      box-shadow: var(--shadow2);
+    }
+    .ph img{width:100%; height:100%; object-fit:cover; display:block}
+    .ph .label{
+      position:absolute; left:12px; bottom:12px;
+      padding:10px 10px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.40);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      font-weight:900;
+      font-size:.92rem;
+    }
+    .ph .remove{
+      position:absolute; right:10px; top:10px;
+      width:38px; height:38px; border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.35);
+      display:grid; place-items:center;
+      cursor:pointer;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      pointer-events:auto;
+    }
+    .ph .remove:before,.ph .remove:after{
+      content:""; width:16px; height:2px; border-radius:10px; background:rgba(255,255,255,.95);
+      position:absolute;
+    }
+    .ph .remove:before{transform:rotate(45deg)}
+    .ph .remove:after{transform:rotate(-45deg)}
+
+    /* Contact + Appointment */
+    .contactGrid{display:grid; grid-template-columns: 1.15fr .85fr; gap:14px; margin-top:16px}
+    form{display:grid; gap:10px; margin-top:10px}
+    .field{display:grid; gap:6px}
+    label{font-weight:850; color: rgba(255,255,255,.88); font-size:.95rem}
+    input, textarea, select{
+      width:100%;
+      padding: 12px 12px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+      color: var(--text);
+      outline:none;
+      pointer-events:auto;
+    }
+    textarea{min-height:110px; resize: vertical}
+    input:focus, textarea:focus, select:focus{
+      border-color: rgba(11,214,162,.34);
+      box-shadow: 0 0 0 4px rgba(11,214,162,.12);
+    }
+    .formRow{display:grid; grid-template-columns: 1fr 1fr; gap:10px}
+    .hint{color: rgba(255,255,255,.70); font-size:.9rem}
+
+    .apptList{
+      margin-top:12px;
+      border-radius: 20px;
+      border:1px solid rgba(255,255,255,.12);
+      overflow:hidden;
+      background: rgba(0,0,0,.16);
+    }
+    .apptList header{
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 12px 12px;
+      background: rgba(255,255,255,.05);
+      border-bottom:1px solid rgba(255,255,255,.10);
+      gap:10px;
+    }
+    .apptList .table{overflow:auto; max-height: 260px}
+    table{width:100%; border-collapse: collapse; min-width: 720px}
+    th, td{text-align:left; padding: 12px 12px; border-bottom:1px solid rgba(255,255,255,.08); font-size:.92rem; color: rgba(255,255,255,.86)}
+    th{
+      position:sticky; top:0;
+      background: rgba(10,160,110,.16);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      font-weight:950;
+      letter-spacing:.2px;
+    }
+
+    footer{
+      padding: 26px 0 90px 0;
+      border-top: 1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.10);
+      position:relative;
+      z-index:2;
+    }
+    .foot{display:flex; flex-wrap:wrap; gap:14px; align-items:center; justify-content:space-between}
+    .foot small{color: rgba(255,255,255,.70)}
+
+    /* Floating */
+    .floatBar{
+      position:fixed; right: 16px; bottom: 16px; z-index: 80;
+      display:flex; flex-direction:column; gap:10px;
+    }
+    .fab{
+      width:54px; height:54px; border-radius: 18px;
+      border:1px solid rgba(255,255,255,.14);
+      background: linear-gradient(135deg, rgba(10,160,110,.95), rgba(11,214,162,.82));
+      box-shadow: 0 22px 60px rgba(11,214,162,.22), 0 18px 35px rgba(0,0,0,.44);
+      display:grid; place-items:center;
+      cursor:pointer;
+    }
+    .fab.red{
+      background: linear-gradient(135deg, rgba(226,59,59,.95), rgba(226,59,59,.74));
+      box-shadow: 0 22px 60px rgba(226,59,59,.18), 0 18px 35px rgba(0,0,0,.44);
+    }
+    .fab svg{width:22px; height:22px; opacity:.96}
+
+    /* Responsive */
+    @media (max-width: 1060px){
+      .links{gap:10px}
+      .tile{grid-column: span 6}
+    }
+    @media (max-width: 980px){
+      .heroGrid{grid-template-columns: 1fr}
+      .heroRight{position:relative; top:auto}
+      .contactGrid{grid-template-columns: 1fr}
+      .expertsGrid .expert{grid-column: span 12}
+      .aboutGrid{grid-template-columns: 1fr}
+      .miniImgs{grid-template-columns: 1fr 1fr}
+      .tile{grid-column: span 6}
+    }
+    @media (max-width: 760px){
+      :root{ --tickerH: 52px; }
+      .tickerWrap{flex-wrap:wrap; height:auto; padding: 10px var(--pad)}
+      .tickerBar{height:auto}
+      .tickerLeft, .tickerRight{min-width:auto}
+      .topbar{top: var(--tickerH)}
+      .links{display:none}
+      .hamburger{display:grid}
+      .formRow{grid-template-columns: 1fr}
+      .grid2{grid-template-columns: 1fr}
+      .actions .btn.hideOnMobile{display:none}
+      .tile{grid-column: span 12}
+      .miniImgs{grid-template-columns: 1fr}
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Floating emoji background layer -->
+  <div class="emojiLayer" id="emojiLayer" aria-hidden="true"></div>
+
+  <!-- Runner / Ticker -->
+  <div class="tickerBar" aria-label="Hospital wishes ticker">
+    <div class="tickerWrap">
+      <div class="tickerLeft">
+        <span class="tickerPill"><span class="dot"></span> Care Message</span>
+      </div>
+
+      <div class="tickerText" aria-live="polite">
+        <span id="tickerLine">Wishing you strength, comfort, and a speedy recovery.</span>
+      </div>
+
+      <div class="tickerRight">
+        <button class="tinyBtn" type="button" id="pauseTickerBtn" title="Pause/Play">Pause</button>
+        <a class="tinyBtn" href="tel:+919532811811" title="Call">Call</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Announcement bar for latest event -->
+  <div class="announce" id="announce">
+    <div class="bar">
+      <div style="display:flex; gap:10px; align-items:center">
+        <span class="pill" style="padding:8px 10px"><span class="dot"></span> Update</span>
+        <div>
+          <strong id="announceTitle">New event</strong>
+          <div class="muted" id="announceMeta" style="font-size:.9rem; margin-top:2px">Details</div>
+        </div>
+      </div>
+      <div class="right">
+        <button class="btn" id="openPanelFromAnnounce" type="button">View</button>
+        <button class="btn primary" id="subscribeFromAnnounce" type="button">Enable Notifications</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Navigation -->
+  <header class="topbar" id="top">
+    <div class="nav">
+      <a class="brand" href="#top" aria-label="Swastik Surgical Hospital Home">
+        <!-- ✅ Add hospital logo image here:
+             Put your logo file in same folder and rename to: logo.png (or update src)
+        -->
+        <div class="logoMark" aria-hidden="true">
+          <img src="./Swastik-Logo.webp" alt="" onerror="this.remove();" />
+        </div>
+        <div class="brandTxt">
+          <strong>SWASTIK SURGICAL</strong>
+          <span>Your Caring Hospital</span>
+        </div>
+      </a>
+
+      <nav class="links" aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#experts">Experts</a>
+        <a href="#departments">Departments</a>
+        <a href="#facilities">Facilities</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#appointment">Appointment</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="actions">
+        <a class="btn hideOnMobile" href="tel:+919532811811" aria-label="Call">Call</a>
+        <a class="btn primary hideOnMobile" href="mailto:swastiksurgicalhospital@gmail.com">Book Appointment</a>
+
+        <!-- Admin Panel (password protected) -->
+        <button class="btn hideOnMobile" id="adminBtn" type="button">Admin</button>
+
+        <!-- Updates / Notifications panel -->
+        <button class="iconBtn" id="panelBtn" type="button" aria-label="Updates">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
+            <path d="M12 22a2 2 0 0 0 2-2H10a2 2 0 0 0 2 2Z" stroke="white" stroke-width="2"/>
+            <path d="M18 9a6 6 0 1 0-12 0c0 7-3 7-3 7h18s-3 0-3-7Z" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+          <span class="badgeCount" id="panelCount" style="display:none">0</span>
+        </button>
+
+        <button class="hamburger" id="hamburger" aria-label="Open menu"><i></i></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="drawer" id="drawer" aria-hidden="true">
+    <div class="backdrop" id="drawerBackdrop"></div>
+    <div class="panel" role="dialog" aria-modal="true" aria-label="Menu">
+      <div class="panelHeader">
+        <div class="brand" style="min-width:auto">
+          <div class="logoMark" style="width:40px;height:40px;border-radius:14px">
+            <img src="./Swastik-Logo.webp" alt="" onerror="this.remove();" />
+          </div>
+          <div class="brandTxt">
+            <strong>SWASTIK SURGICAL</strong>
+            <span>Your Caring Hospital</span>
+          </div>
+        </div>
+        <div class="x" id="drawerClose" aria-label="Close menu"></div>
+      </div>
+
+      <nav>
+        <a href="#about" class="drawerLink">About</a>
+        <a href="#experts" class="drawerLink">Experts</a>
+        <a href="#departments" class="drawerLink">Departments</a>
+        <a href="#facilities" class="drawerLink">Facilities</a>
+        <a href="#gallery" class="drawerLink">Gallery</a>
+        <a href="#appointment" class="drawerLink">Book Appointment</a>
+        <a href="#contact" class="drawerLink">Contact</a>
+      </nav>
+
+      <div class="panelFooter">
+        <button class="btn" type="button" id="openPanelFromDrawer">Updates</button>
+        <button class="btn" type="button" id="adminBtnMobile">Admin</button>
+        <a class="btn primary" href="mailto:swastiksurgicalhospital@gmail.com">Book Appointment</a>
+        <a class="btn" href="tel:+919532811811">Call +91 9532811811</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Updates Panel Modal (Events + Gallery Admin Tools inside, but admin-only to edit) -->
+  <div class="modal" id="panelModal" aria-hidden="true">
+    <div class="overlay" id="panelOverlay"></div>
+    <div class="box" role="dialog" aria-modal="true" aria-label="Updates panel">
+      <div class="modalHeader">
+        <strong>Updates</strong>
+        <button class="iconBtn" id="panelClose" type="button" aria-label="Close">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+            <path d="M6 6l12 12M18 6L6 18" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="modalBody">
+        <div class="grid2">
+          <!-- PUBLIC: Events list + notifications -->
+          <div class="miniCard">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+              <strong>Events</strong>
+              <button class="btn primary" id="subscribeBtn" type="button">Enable Notifications</button>
+            </div>
+            <div class="hint" id="notifState" style="margin-top:8px;"></div>
+
+            <div class="divider" style="margin:14px 0;"></div>
+
+            <div id="eventList" style="display:grid; gap:10px; max-height: 340px; overflow:auto; padding-right:4px;"></div>
+
+            <!-- ADMIN ONLY buttons -->
+            <div id="eventAdminTools" style="display:none; margin-top:12px; gap:10px; flex-wrap:wrap;">
+              <button class="btn" id="exportEventsBtn" type="button">Export Events (JSON)</button>
+              <button class="btn danger" id="clearEventsBtn" type="button">Clear Events</button>
+            </div>
+          </div>
+
+          <!-- ADMIN ONLY: Add Event + Gallery URL control -->
+          <div class="miniCard" id="eventAdminBox" style="display:none;">
+            <strong>Admin: Publish Event</strong>
+
+            <form id="eventForm" style="margin-top:10px;">
+              <div class="field">
+                <label for="evTitle">Event Title</label>
+                <input id="evTitle" required placeholder="Example: Free OPD Camp" />
+              </div>
+
+              <div class="formRow">
+                <div class="field">
+                  <label for="evDate">Date</label>
+                  <input id="evDate" type="date" required />
+                </div>
+                <div class="field">
+                  <label for="evTime">Time</label>
+                  <input id="evTime" type="time" required />
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="evDesc">Description</label>
+                <textarea id="evDesc" placeholder="Short details"></textarea>
+              </div>
+
+              <button class="btn primary" type="submit">Publish Event</button>
+              <div class="hint" id="eventStatus" style="margin-top:10px;"></div>
+            </form>
+
+            <div class="divider"></div>
+
+            <strong>Admin: Gallery (Add by URL)</strong>
+            <div class="hint" style="margin-top:6px;">
+              Admin can add gallery photos by URL. Everyone can view.
+              <br>
+              For “same gallery for all users”, host a public JSON file and set <b>PUBLIC_GALLERY_FEED_URL</b> in script.
+            </div>
+
+            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+              <button class="btn" id="addPhotoUrlBtn" type="button">Add Photo URL</button>
+              <button class="btn" id="exportGalleryBtn" type="button">Export Gallery (JSON)</button>
+              <button class="btn danger" id="clearGalleryBtn" type="button">Clear Gallery</button>
+            </div>
+            <div class="hint" id="galleryAdminStatus" style="margin-top:10px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <main class="hero">
+    <div class="heroBg" aria-hidden="true">
+      <!-- Put your video file in same folder as index.html and name it: hospital.mp4 -->
+      <video id="heroVideo" autoplay muted loop playsinline preload="metadata">
+        <source src="./WhatsApp Video 2026-01-19 at 11.54.52 PM.mp4" type="video/mp4" />
+      </video>
+      <div class="heroOverlay"></div>
+    </div>
+
+    <div class="heroGrid">
+      <div>
+        <span class="pill"><span class="dot"></span> Trusted Partner in Fertility & Surgical Care</span>
+
+        <h1 class="heroTitle" style="margin-top:12px;">
+          Swastik Surgical Hospital<br />
+          <span class="accent">Minimal Access Surgery</span> and Multi-Speciality Care
+        </h1>
+
+        <p class="heroDesc" style="margin-top:12px;">
+          At Swastik Surgical Multi-Speciality Hospital, we are committed to excellence in healthcare.
+          Our dedicated professionals work tirelessly to ensure each patient receives the best possible care.
+        </p>
+
+        <div class="heroBadges">
+          <span class="pill"><span class="dot" style="background:var(--brand2); box-shadow:0 0 0 6px rgba(226,59,59,.16)"></span> 24x7 Support</span>
+          <span class="pill"><span class="dot" style="background:var(--brand3)"></span> Convenient Location</span>
+          <span class="pill"><span class="dot"></span> Patient-First Experience</span>
+        </div>
+
+        <div class="heroBtns">
+          <a class="btn primary" href="mailto:swastiksurgicalhospital@gmail.com">Book Appointment</a>
+          <a class="btn" href="tel:+919532811811">Call Now</a>
+          <button class="btn" id="openPanelFromHero" type="button">Updates</button>
+        </div>
+      </div>
+
+      <aside class="heroRight">
+        <div class="infoCard" id="quick">
+          <div class="infoRow">
+            <div class="ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 2a7 7 0 0 1 7 7c0 5-7 13-7 13S5 14 5 9a7 7 0 0 1 7-7Z" stroke="white" stroke-width="2"/>
+                <path d="M12 12.2a2.2 2.2 0 1 0 0-4.4 2.2 2.2 0 0 0 0 4.4Z" stroke="white" stroke-width="2"/>
+              </svg>
+            </div>
+            <div>
+              <strong>Address</strong>
+              <span>Shivpur Bypass Rd, Varanasi, Uttar Pradesh 221003</span>
+              <span>
+                <a target="_blank" rel="noopener"
+                   href="https://www.google.com/maps/search/swastik+hospital+varanasi/@25.3184681,82.94196,13z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI2MDExMy4wIKXMDSoASAFQAw%3D%3D">
+                   Open on Google Maps
+                </a>
+              </span>
+            </div>
+          </div>
+
+          <div class="infoRow">
+            <div class="ico red" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M6.5 3h11A2.5 2.5 0 0 1 20 5.5v13A2.5 2.5 0 0 1 17.5 21h-11A2.5 2.5 0 0 1 4 18.5v-13A2.5 2.5 0 0 1 6.5 3Z" stroke="white" stroke-width="2"/>
+                <path d="M8 7h8M8 11h8M8 15h6" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <strong>Get in touch</strong>
+              <span>Phone: <a href="tel:+919532811811">+91 9532811811</a></span>
+              <span>Email: <a href="mailto:swastiksurgicalhospital@gmail.com">swastiksurgicalhospital@gmail.com</a></span>
+            </div>
+          </div>
+
+          <div class="infoRow">
+            <div class="ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M7 3v3M17 3v3" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                <path d="M4 7h16v14H4V7Z" stroke="white" stroke-width="2"/>
+                <path d="M7 11h5M7 15h9" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <strong>Quick action</strong>
+              <span><a href="#appointment">Book appointment</a> | <a href="#experts">Meet experts</a></span>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <!-- About -->
+  <section id="about">
+    <div class="wrap">
+      <div class="kicker">About Us</div>
+      <h2>Care that is modern, safe, and patient-first</h2>
+
+      <div class="aboutGrid">
+        <div class="card">
+          <p class="muted" style="margin-top:4px; max-width: 95ch;">
+            Since its inception in 2015, Swastik Surgical Multi Speciality Hospital has been a cornerstone of healthcare in Shivpur, Varanasi.
+            Renowned for its comprehensive care, the hospital stands as a premier destination for both local residents and visitors from other areas of Varanasi.
+            Over the years, Swastik Surgical Multi Speciality Hospital has earned a remarkable reputation by consistently delivering high-quality healthcare services,
+            fostering a tradition of trust and patient satisfaction.
+            <br><br>
+            At Swastik Surgical Multi Speciality Hospital, we are committed to excellence in healthcare. Our dedicated team works tirelessly to ensure that each patient receives the best possible care.
+            Conveniently located near Shivpur Bypass Road, our strategic location and connectivity ensure that we are ready to serve you at a moment’s notice.
+          </p>
+        </div>
+
+        <!-- ✅ Add small images here (replace file names with your images) -->
+        <div class="miniImgs">
+          <div class="miniImgCard">
+            <img src="./about1.jpg" alt="" onerror="this.remove(); this.parentElement.innerHTML+='<div class=&quot;cap&quot;>Hospital</div>';">
+            <div class="cap">Hospital</div>
+          </div>
+          <div class="miniImgCard">
+            <img src="./about2.jpg" alt="" onerror="this.remove(); this.parentElement.innerHTML+='<div class=&quot;cap&quot;>Care</div>';">
+            <div class="cap">Care</div>
+          </div>
+          <div class="miniImgCard">
+            <img src="./about3.jpg" alt="" onerror="this.remove(); this.parentElement.innerHTML+='<div class=&quot;cap&quot;>Facilities</div>';">
+            <div class="cap">Facilities</div>
+          </div>
+          <div class="miniImgCard">
+            <img src="./about4.jpg" alt="" onerror="this.remove(); this.parentElement.innerHTML+='<div class=&quot;cap&quot;>Team</div>';">
+            <div class="cap">Team</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experts -->
+  <section id="experts">
+    <div class="wrap">
+      <div class="kicker">Meet Our Experts</div>
+      <h2>Doctors</h2>
+
+      <div class="expertsGrid">
+        <div class="expert">
+          <div class="expertTop">
+            <div class="photo" aria-label="Dr. Pramendra Singh photo">
+              <img src="./p singh.png" alt="Dr. Pramendra Singh" onerror="this.remove(); this.parentElement.textContent='PS';" />
+            </div>
+            <div>
+              <h3>Dr. Pramendra Singh</h3>
+              <div class="qual">(M.B.B.S, M.S, FMAS)</div>
+            </div>
+          </div>
+
+          <div class="bullets">
+            <div class="b"><span class="mark"></span><span>Laparoscopic Surgeon</span></div>
+            <div class="b"><span class="mark"></span><span>Ex Sr. Fortis Hospital, New Delhi</span></div>
+          </div>
+        </div>
+
+        <div class="expert">
+          <div class="expertTop">
+            <div class="photo" aria-label="Dr. Tulika Singh photo">
+              <img src="./dr tu.jpeg" alt="Dr. Tulika Singh" onerror="this.remove(); this.parentElement.textContent='TS';" />
+            </div>
+            <div>
+              <h3>Dr. Tulika Singh</h3>
+              <div class="qual">(M.B.B.S, FGO, DGO (O&amp;G))</div>
+            </div>
+          </div>
+
+          <div class="bullets">
+            <div class="b"><span class="mark"></span><span>Obstetrician &amp; Gynecologist</span></div>
+            <div class="b"><span class="mark"></span><span>Special interest: infertility</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Departments -->
+  <section id="departments">
+    <div class="wrap">
+      <div class="kicker">Our Departments</div>
+      <h2>Specialities under one trusted hospital</h2>
+      <p class="muted" style="margin-top:10px; max-width: 92ch;">
+        Replace each image file name with your own department photos. (Example: <b>dept-urology.jpg</b>)
+      </p>
+
+      <div class="tilesGrid">
+        <!-- ✅ Replace images -->
+        <div class="tile">
+          <div class="tileMedia"><img src="./dept-general-surgery.jpg" alt="" onerror="this.remove();"></div>
+          <div class="tileBody">
+            <strong>General Surgery</strong>
+            <div class="desc">Safe surgical care with modern techniques and patient-first protocols.</div>
+            <div class="tagRow"><span class="tag">Consultation</span><span class="tag">Surgery</span><span class="tag">Recovery</span></div>
+          </div>
+        </div>
+
+        <div class="tile">
+          <div class="tileMedia"><img src="./dept-gynaecology.jpg" alt="" onerror="this.remove();"></div>
+          <div class="tileBody">
+            <strong>Gynaecology</strong>
+            <div class="desc">Women’s health with compassionate support, diagnosis, and treatment.</div>
+            <div class="tagRow"><span class="tag">O&amp;G</span><span class="tag">Care</span><span class="tag">Support</span></div>
+          </div>
+        </div>
+
+        <div class="tile">
+          <div class="tileMedia"><img src="./dept-fertility.jpg" alt="" onerror="this.remove();"></div>
+          <div class="tileBody">
+            <strong>Fertility</strong>
+            <div class="desc">Guidance and treatment focused on your comfort, privacy, and outcomes.</div>
+            <div class="tagRow"><span class="tag">Counseling</span><span class="tag">Plans</span><span class="tag">Follow-up</span></div>
+          </div>
+        </div>
+
+        <div class="tile">
+          <div class="tileMedia"><img src="./dept-orthopedics.jpg" alt="" onerror="this.remove();"></div>
+          <div class="tileBody">
+            <strong>Orthopedics</strong>
+            <div class="desc">Joint, bone, and muscle care to help you return to daily life faster.</div>
+            <div class="tagRow"><span class="tag">Bones</span><span class="tag">Joints</span><span class="tag">Rehab</span></div>
+          </div>
+        </div>
+
+        <div class="tile">
+          <div class="tileMedia"><img src="./dept-urology.jpg" alt="" onerror="this.remove();"></div>
+          <div class="tileBody">
+            <strong>Urology</strong>
+            <div class="desc">Diagnosis and treatment for urinary tract and related conditions.</div>
+            <div class="tagRow"><span class="tag">Consult</span><span class="tag">Tests</span><span class="tag">Care</span></div>
+          </div>
+        </div>
+
+        <div class="tile">
+          <div class="tileMedia"><img src="./dept-oncology.jpg" alt="" onerror="this.remove();"></div>
+          <div class="tileBody">
+            <strong>Oncology</strong>
+            <div class="desc">Supportive care pathways with guidance at every stage.</div>
+            <div class="tagRow"><span class="tag">Support</span><span class="tag">Guidance</span><span class="tag">Care</span></div>
+          </div>
+        </div>
+
+        <div class="tile">
+          <div class="tileMedia"><img src="./dept-neuro.jpg" alt="" onerror="this.remove();"></div>
+          <div class="tileBody">
+            <strong>Neuro Surgery</strong>
+            <div class="desc">Advanced evaluation and care for neurological conditions.</div>
+            <div class="tagRow"><span class="tag">Neuro</span><span class="tag">Care</span><span class="tag">Support</span></div>
+          </div>
+        </div>
+
+        <div class="tile">
+          <div class="tileMedia"><img src="./dept-medicine.jpg" alt="" onerror="this.remove();"></div>
+          <div class="tileBody">
+            <strong>General Medicine</strong>
+            <div class="desc">Clinical care for common illnesses and long-term health management.</div>
+            <div class="tagRow"><span class="tag">OPD</span><span class="tag">Diagnosis</span><span class="tag">Follow-up</span></div>
+          </div>
+        </div>
+
+        <div class="tile">
+          <div class="tileMedia"><img src="./dept-ent.jpg" alt="" onerror="this.remove();"></div>
+          <div class="tileBody">
+            <strong>ENT</strong>
+            <div class="desc">Ear, Nose, Throat care with modern evaluation and treatment options.</div>
+            <div class="tagRow"><span class="tag">ENT</span><span class="tag">Care</span><span class="tag">Relief</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Facilities -->
+  <section id="facilities">
+    <div class="wrap">
+      <div class="kicker">Our Facilities</div>
+      <h2>Modern systems for safer, faster care</h2>
+      <p class="muted" style="margin-top:10px; max-width: 92ch;">
+        Replace facility images with your real photos: <b>facility-lab.jpg</b>, <b>facility-pharmacy.jpg</b>, etc.
+      </p>
+
+      <div class="tilesGrid">
+        <div class="tile">
+          <div class="tileMedia"><img src="./facility-state-of-the-art.jpg" alt="" onerror="this.remove();"></div>
+          <div class="tileBody">
+            <strong>State-of-the-art Facilities</strong>
+            <div class="desc">Clean, modern infrastructure designed for patient comfort and safety.</div>
+            <div class="tagRow"><span class="tag">Hygiene</span><span class="tag">Safety</span><span class="tag">Modern</span></div>
+          </div>
+        </div>
+
+        <div class="tile">
+          <div class="tileMedia"><img src="./facility-pathlab.jpg" alt="" onerror="this.remove();"></div>
+          <div class="tileBody">
+            <strong>Path Lab</strong>
+            <div class="desc">Reliable diagnostics supporting faster decisions and better outcomes.</div>
+            <div class="tagRow"><span class="tag">Diagnostics</span><span class="tag">Reports</span><span class="tag">Support</span></div>
+          </div>
+        </div>
+
+        <div class="tile">
+          <div class="tileMedia"><img src="./facility-medicine.jpg" alt="" onerror="this.remove();"></div>
+          <div class="tileBody">
+            <strong>Medicine &amp; Pharmacy</strong>
+            <div class="desc">Access to essential medicines and guidance for safe usage.</div>
+            <div class="tagRow"><span class="tag">Pharmacy</span><span class="tag">Guidance</span><span class="tag">Support</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section id="gallery">
+    <div class="wrap">
+      <div class="kicker">Gallery</div>
+      <h2>Auto-swipe gallery</h2>
+
+      <div class="card galleryCard" style="margin-top:16px;">
+        <div class="galleryHead">
+          <div>
+            <strong style="font-size:1.05rem;">Our Gallery</strong>
+            <div class="muted" style="margin-top:6px; font-size:.95rem;">
+              Admin can add photos (by URL). Everyone can view.
+            </div>
+          </div>
+
+          <!-- Admin-only tools (hidden for visitors) -->
+          <div class="galleryTools" id="adminGalleryTools" style="display:none;">
+            <button class="btn" id="addPhotoUrlBtnTop" type="button">Add Photo URL</button>
+            <button class="btn danger" id="clearGalleryBtnTop" type="button">Clear</button>
+          </div>
+        </div>
+
+        <div class="strip" id="galleryStrip" aria-label="Gallery strip">
+          <div class="ph"><div class="label">Hospital</div></div>
+          <div class="ph"><div class="label">Doctors</div></div>
+          <div class="ph"><div class="label">Facilities</div></div>
+          <div class="ph"><div class="label">Care</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Appointment + Contact -->
+  <section id="appointment">
+    <div class="wrap">
+      <div class="kicker">Contact</div>
+      <h2>Book appointment / Get in touch</h2>
+
+      <div class="contactGrid">
+        <div class="card">
+          <h3>Appointment Form</h3>
+
+          <form id="apptForm" autocomplete="on">
+            <div class="formRow">
+              <div class="field">
+                <label for="name">Name</label>
+                <input id="name" name="name" placeholder="Full name" required />
+              </div>
+              <div class="field">
+                <label for="phone">Phone</label>
+                <input id="phone" name="phone" placeholder="+91..." inputmode="tel" required />
+              </div>
+            </div>
+
+            <div class="formRow">
+              <div class="field">
+                <label for="dept">Department</label>
+                <select id="dept" name="dept" required>
+                  <option value="">Select</option>
+                  <option>General Surgery</option>
+                  <option>Gynaecology</option>
+                  <option>Fertility</option>
+                  <option>Orthopedics</option>
+                  <option>Urology</option>
+                  <option>Oncology</option>
+                  <option>Neuro Surgery</option>
+                  <option>General Medicine</option>
+                  <option>ENT</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="email">Email (optional)</label>
+                <input id="email" name="email" placeholder="Optional" inputmode="email" />
+              </div>
+            </div>
+
+            <div class="formRow">
+              <div class="field">
+                <label for="date">Preferred Date</label>
+                <input id="date" name="date" type="date" required />
+              </div>
+              <div class="field">
+                <label for="time">Preferred Time</label>
+                <input id="time" name="time" type="time" required />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="message">Message (optional)</label>
+              <textarea id="message" name="message" placeholder="Write symptoms / query"></textarea>
+            </div>
+
+            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:6px;">
+              <button class="btn primary" type="submit">Submit Appointment</button>
+              <button class="btn" type="button" id="exportCsvBtn">Export CSV</button>
+              <button class="btn danger" type="button" id="clearApptBtn">Clear Appointments</button>
+            </div>
+
+            <div class="hint" id="formStatus" style="margin-top:8px;"></div>
+          </form>
+
+          <div class="apptList" style="margin-top:14px;">
+            <header>
+              <strong>Saved appointments (offline)</strong>
+              <span class="hint" id="apptCount">0</span>
+            </header>
+            <div class="table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Department</th>
+                    <th>Message</th>
+                  </tr>
+                </thead>
+                <tbody id="apptTbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" id="contact">
+          <h3>Contact Details</h3>
+          <div class="divider" style="margin:12px 0;"></div>
+
+          <p class="muted">
+            Phone: <a href="tel:+919532811811" style="font-weight:900; text-decoration:underline; text-underline-offset:3px;">+91 9532811811</a><br/>
+            Email: <a href="mailto:swastiksurgicalhospital@gmail.com" style="font-weight:900; text-decoration:underline; text-underline-offset:3px;">swastiksurgicalhospital@gmail.com</a><br/>
+            Address: Shivpur Bypass Rd, Varanasi, Uttar Pradesh 221003
+          </p>
+
+          <div class="divider"></div>
+
+          <h3>Location (Google Maps)</h3>
+          <p class="muted" style="margin-top:8px;">
+            Use this link for hospital location.
+          </p>
+
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+            <a class="btn primary" target="_blank" rel="noopener"
+               href="https://www.google.com/maps/search/swastik+hospital+varanasi/@25.3184681,82.94196,13z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI2MDExMy4wIKXMDSoASAFQAw%3D%3D">
+              Open Maps
+            </a>
+            <button class="btn" type="button" id="openPanelFromContact">Updates</button>
+          </div>
+
+          <div class="divider"></div>
+
+          <h3>Notifications</h3>
+          <p class="muted" style="margin-top:8px;">
+            Enable notifications to get alerts when a new event is published (on this device/browser).
+          </p>
+          <button class="btn primary" type="button" id="subscribeBtn2">Enable Notifications</button>
+          <div class="hint" id="notifState2" style="margin-top:10px;"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap foot">
+      <div class="brand" style="min-width:auto">
+        <div class="logoMark" style="width:38px;height:38px;border-radius:14px">
+          <img src="./logo.png" alt="" onerror="this.remove();" />
+        </div>
+        <div class="brandTxt">
+          <strong>SWASTIK SURGICAL</strong>
+          <span>Your Caring Hospital</span>
+        </div>
+      </div>
+      <small>Copyright © <span id="year"></span> Swastik Surgical Hospital. All rights reserved.</small>
+    </div>
+  </footer>
+
+  <!-- Floating buttons -->
+  <div class="floatBar" aria-label="Quick actions">
+    <a class="fab" href="tel:+919532811811" aria-label="Call">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M6.6 3.8c.6-1 2-1.2 2.8-.4l2.3 2.3c.7.7.7 1.8 0 2.5l-1.2 1.2c1 2 2.7 3.7 4.7 4.7l1.2-1.2c.7-.7 1.8-.7 2.5 0l2.3 2.3c.8.8.6 2.2-.4 2.8l-1.4.8c-1.1.7-2.5.8-3.7.4-7.2-2.4-12.8-8-15.2-15.2-.4-1.2-.3-2.6.4-3.7l.8-1.4Z" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+      </svg>
+    </a>
+    <a class="fab red" href="#appointment" aria-label="Book Appointment">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M7 3v3M17 3v3" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <path d="M4 7h16v14H4V7Z" stroke="white" stroke-width="2"/>
+        <path d="M7 11h5M7 15h9" stroke="white" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </a>
+  </div>
+
+  <script>
+    /* ============================================================
+       ADMIN SETTINGS (CHANGE THIS)
+       IMPORTANT: This is front-end only. For real security, use backend.
+    ============================================================ */
+    const ADMIN_PASSWORD = "ChangeThis@123"; // change this
+
+    /* ============================================================
+       OPTIONAL: Public Gallery Feed (true public sync across devices)
+       Host a JSON file like:
+       [
+         "https://site.com/img1.jpg",
+         "https://site.com/img2.jpg"
+       ]
+       Then set the URL below.
+    ============================================================ */
+    const PUBLIC_GALLERY_FEED_URL = ""; // example: "https://yourdomain.com/gallery.json"
+
+    /* ---------- Helpers ---------- */
+    const $ = (q, el=document) => el.querySelector(q);
+    const $$ = (q, el=document) => Array.from(el.querySelectorAll(q));
+    $("#year").textContent = new Date().getFullYear();
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+    function cryptoRandom(){
+      return (Math.random().toString(16).slice(2) + Date.now().toString(16)).slice(0, 18);
+    }
+
+    /* ============================================================
+       Best-effort protection (NOT perfect)
+    ============================================================ */
+    document.addEventListener("contextmenu", (e) => e.preventDefault());
+    document.addEventListener("copy", (e) => { e.preventDefault(); });
+    document.addEventListener("cut", (e) => { e.preventDefault(); });
+    document.addEventListener("dragstart", (e) => { e.preventDefault(); });
+    // Block common devtools shortcuts (best-effort)
+    document.addEventListener("keydown", (e) => {
+      const k = e.key.toLowerCase();
+      if ((e.ctrlKey && (k === "u" || k === "s" || k === "c" || k === "x")) || (e.ctrlKey && e.shiftKey && (k === "i" || k === "j" || k === "c")) || k === "f12") {
+        e.preventDefault();
+      }
+    }, { capture:true });
+
+    /* ============================================================
+       Floating Emojis (50+)
+    ============================================================ */
+    (function initEmojis(){
+      const layer = $("#emojiLayer");
+      if(!layer) return;
+
+      const emojis = ["🩺","💊","🏥","🧑‍⚕️","👩‍⚕️","🧬","🧫","🩻","🫀","🧠","🦴","🧪","🩹","🚑","📋","🧴"];
+      const count = 56; // 50+
+
+      for(let i=0;i<count;i++){
+        const el = document.createElement("div");
+        el.className = "emoji";
+        el.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+
+        // random positions
+        const left = Math.random()*100;
+        const top = 100 + Math.random()*120; // start below then float up
+        el.style.left = left + "vw";
+        el.style.top = top + "vh";
+
+        // random animation speed and delay
+        const dur = 16 + Math.random()*18; // 16-34s
+        const delay = -Math.random()*dur;  // negative starts mid-animation
+        el.style.animationDuration = dur + "s";
+        el.style.animationDelay = delay + "s";
+
+        layer.appendChild(el);
+      }
+    })();
+
+    /* ============================================================
+       Ticker messages (10)
+    ============================================================ */
+    const tickerLine = $("#tickerLine");
+    const pauseTickerBtn = $("#pauseTickerBtn");
+    const tickerLines = [
+      "Wishing you strength, comfort, and a speedy recovery.",
+      "Your health and safety are our highest priority—always.",
+      "Every patient deserves respect, clarity, and compassionate care.",
+      "Small steps today can lead to big healing tomorrow.",
+      "We are here to support you—before, during, and after treatment.",
+      "May you feel calm, cared for, and confident in your recovery journey.",
+      "Trust the process—your wellbeing matters.",
+      "Healing begins with hope, and we stand with you.",
+      "Quality care, kindness, and clarity—at every visit.",
+      "Stay strong—better days and better health are ahead."
+    ];
+    let tickerIdx = 0;
+    let tickerPaused = false;
+    function setTicker(text){
+      if(!tickerLine) return;
+      tickerLine.textContent = text;
+    }
+    let tickerTimer = setInterval(() => {
+      if(tickerPaused) return;
+      tickerIdx = (tickerIdx + 1) % tickerLines.length;
+      setTicker(tickerLines[tickerIdx]);
+    }, 4200);
+
+    pauseTickerBtn?.addEventListener("click", () => {
+      tickerPaused = !tickerPaused;
+      pauseTickerBtn.textContent = tickerPaused ? "Play" : "Pause";
+    });
+
+    /* ============================================================
+       Mobile Drawer
+    ============================================================ */
+    const drawer = $("#drawer");
+    const openDrawer = () => { drawer.classList.add("show"); drawer.setAttribute("aria-hidden","false"); };
+    const closeDrawer = () => { drawer.classList.remove("show"); drawer.setAttribute("aria-hidden","true"); };
+
+    $("#hamburger").addEventListener("click", openDrawer);
+    $("#drawerClose").addEventListener("click", closeDrawer);
+    $("#drawerBackdrop").addEventListener("click", closeDrawer);
+    $$(".drawerLink").forEach(a => a.addEventListener("click", closeDrawer));
+
+    /* ============================================================
+       Admin Mode
+    ============================================================ */
+    let isAdmin = false;
+
+    function promptAdmin(){
+      const pass = prompt("Admin password:");
+      if(pass === null) return;
+      if(pass === ADMIN_PASSWORD){
+        isAdmin = true;
+        lockAdminUI();
+        openPanel();
+      } else {
+        isAdmin = false;
+        lockAdminUI();
+        alert("Wrong password.");
+      }
+    }
+    $("#adminBtn").addEventListener("click", promptAdmin);
+    $("#adminBtnMobile").addEventListener("click", () => { closeDrawer(); promptAdmin(); });
+
+    /* ============================================================
+       Updates Panel (Events + Notifications + Admin Tools)
+    ============================================================ */
+    const EKEY = "ssh_events_v1";
+    const SUBKEY = "ssh_notif_enabled_v1";
+
+    const panelBtn = $("#panelBtn");
+    const panelCount = $("#panelCount");
+    const panelModal = $("#panelModal");
+    const panelOverlay = $("#panelOverlay");
+    const panelClose = $("#panelClose");
+
+    const eventList = $("#eventList");
+    const eventForm = $("#eventForm");
+    const eventStatus = $("#eventStatus");
+    const notifState = $("#notifState");
+    const notifState2 = $("#notifState2");
+    const subscribeBtn = $("#subscribeBtn");
+    const subscribeBtn2 = $("#subscribeBtn2");
+    const clearEventsBtn = $("#clearEventsBtn");
+    const exportEventsBtn = $("#exportEventsBtn");
+    const eventAdminBox = $("#eventAdminBox");
+    const eventAdminTools = $("#eventAdminTools");
+
+    const announce = $("#announce");
+    const announceTitle = $("#announceTitle");
+    const announceMeta = $("#announceMeta");
+    const openPanelFromAnnounce = $("#openPanelFromAnnounce");
+    const subscribeFromAnnounce = $("#subscribeFromAnnounce");
+
+    function openPanel(){
+      panelModal.classList.add("show");
+      panelModal.setAttribute("aria-hidden","false");
+      renderEvents();
+      updateNotifUI();
+      lockAdminUI();
+    }
+    function closePanel(){
+      panelModal.classList.remove("show");
+      panelModal.setAttribute("aria-hidden","true");
+    }
+
+    panelBtn.addEventListener("click", openPanel);
+    panelOverlay.addEventListener("click", closePanel);
+    panelClose.addEventListener("click", closePanel);
+
+    $("#openPanelFromHero").addEventListener("click", openPanel);
+    $("#openPanelFromContact").addEventListener("click", openPanel);
+    $("#openPanelFromDrawer").addEventListener("click", () => { closeDrawer(); openPanel(); });
+    openPanelFromAnnounce.addEventListener("click", openPanel);
+
+    function getEvents(){ return JSON.parse(localStorage.getItem(EKEY) || "[]"); }
+    function setEvents(items){ localStorage.setItem(EKEY, JSON.stringify(items)); }
+
+    function renderEvents(){
+      const items = getEvents();
+      eventList.innerHTML = "";
+
+      if(!items.length){
+        eventList.innerHTML = `<div style="border-radius:18px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.04);padding:12px;">
+          <strong>No events</strong>
+          <div class="muted" style="margin-top:6px;font-size:.92rem;">No new updates.</div>
+        </div>`;
+           } else {
+        items.forEach((ev) => {
+          const div = document.createElement("div");
+          div.style.borderRadius = "18px";
+          div.style.border = "1px solid rgba(255,255,255,.10)";
+          div.style.background = "rgba(255,255,255,.04)";
+          div.style.padding = "12px";
+
+          const d = new Date(ev.date + "T" + (ev.time || "00:00"));
+          const nice = isNaN(d.getTime()) ? `${ev.date} ${ev.time || ""}` : `${d.toLocaleDateString()} ${ev.time || ""}`;
+
+          div.innerHTML = `
+            <strong>${escapeHtml(ev.title)}</strong>
+            <div class="muted" style="margin-top:6px;font-size:.92rem;">${escapeHtml(nice)}${ev.desc ? " • " + escapeHtml(ev.desc) : ""}</div>
+          `;
+          eventList.appendChild(div);
+        });
+      }
+
+      updateEventBadge();
+      renderAnnouncement();
+    }
+
+    function updateEventBadge(){
+      const items = getEvents();
+      if(items.length){
+        panelCount.style.display = "grid";
+        panelCount.textContent = String(items.length);
+      } else {
+        panelCount.style.display = "none";
+      }
+    }
+
+    function renderAnnouncement(){
+      const items = getEvents();
+      if(!items.length){
+        announce.style.display = "none";
+        return;
+      }
+      const ev = items[0];
+      announceTitle.textContent = ev.title;
+
+      const d = new Date(ev.date + "T" + (ev.time || "00:00"));
+      const nice = isNaN(d.getTime()) ? `${ev.date} ${ev.time || ""}` : `${d.toLocaleDateString()} ${ev.time || ""}`;
+      announceMeta.textContent = `${nice}${ev.desc ? " • " + ev.desc : ""}`;
+      announce.style.display = "block";
+
+      updateNotifUI();
+    }
+
+    /* Admin-only publishing events */
+    eventForm?.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      if(!isAdmin){
+        eventStatus.textContent = "Only admin can publish events.";
+        eventStatus.style.color = "rgba(226,59,59,.95)";
+        return;
+      }
+
+      const title = $("#evTitle").value.trim();
+      const date = $("#evDate").value;
+      const time = $("#evTime").value;
+      const desc = $("#evDesc").value.trim();
+
+      if(!title || !date || !time){
+        eventStatus.textContent = "Please fill required fields.";
+        eventStatus.style.color = "rgba(226,59,59,.95)";
+        return;
+      }
+
+      const items = getEvents();
+      const ev = { id: cryptoRandom(), title, date, time, desc, createdAt: Date.now() };
+      items.unshift(ev);
+      setEvents(items);
+
+      eventForm.reset();
+      eventStatus.textContent = "Event published.";
+      eventStatus.style.color = "rgba(11,214,162,.95)";
+      renderEvents();
+
+      // Notify this device if notifications enabled
+      const enabled = localStorage.getItem(SUBKEY) === "1";
+      if(enabled && "Notification" in window && Notification.permission === "granted"){
+        try{
+          new Notification("Swastik Surgical Hospital", {
+            body: `${ev.title} • ${date} ${time}${desc ? " • " + desc : ""}`,
+            silent: false
+          });
+        }catch(_){}
+      }
+    });
+
+    clearEventsBtn?.addEventListener("click", () => {
+      if(!isAdmin) return;
+      localStorage.removeItem(EKEY);
+      renderEvents();
+      eventStatus.textContent = "Events cleared.";
+      eventStatus.style.color = "rgba(226,59,59,.95)";
+    });
+
+    exportEventsBtn?.addEventListener("click", () => {
+      if(!isAdmin) return;
+      const items = getEvents();
+      const blob = new Blob([JSON.stringify(items, null, 2)], { type:"application/json;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "swastik_events.json";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    });
+
+    /* Notifications */
+    async function enableNotifications(){
+      if(!("Notification" in window)){
+        setNotifText("Notifications not supported in this browser.", true);
+        return;
+      }
+      const perm = await Notification.requestPermission();
+      if(perm === "granted"){
+        localStorage.setItem(SUBKEY, "1");
+        setNotifText("Notifications enabled on this device.", false);
+        updateNotifUI();
+      } else {
+        localStorage.setItem(SUBKEY, "0");
+        setNotifText("Permission denied. Enable from browser settings.", true);
+        updateNotifUI();
+      }
+    }
+    subscribeBtn?.addEventListener("click", enableNotifications);
+    subscribeBtn2?.addEventListener("click", enableNotifications);
+    subscribeFromAnnounce?.addEventListener("click", enableNotifications);
+
+    function updateNotifUI(){
+      const enabled = localStorage.getItem(SUBKEY) === "1";
+      const perm = ("Notification" in window) ? Notification.permission : "unsupported";
+
+      const msg = (perm === "unsupported")
+        ? "Notifications not supported in this browser."
+        : enabled && perm === "granted"
+          ? "Notifications are enabled on this device."
+          : perm === "denied"
+            ? "Permission denied. Enable notifications from browser settings."
+            : "Tap Enable Notifications to allow event alerts.";
+
+      const isErr = (perm === "denied" || perm === "unsupported");
+
+      if(notifState){
+        notifState.textContent = msg;
+        notifState.style.color = isErr ? "rgba(226,59,59,.95)" : "rgba(255,255,255,.72)";
+      }
+      if(notifState2){
+        notifState2.textContent = msg;
+        notifState2.style.color = isErr ? "rgba(226,59,59,.95)" : "rgba(255,255,255,.72)";
+      }
+
+      if(subscribeBtn) subscribeBtn.textContent = enabled && perm === "granted" ? "Enabled" : "Enable Notifications";
+      if(subscribeBtn2) subscribeBtn2.textContent = enabled && perm === "granted" ? "Enabled" : "Enable Notifications";
+      if(subscribeFromAnnounce) subscribeFromAnnounce.textContent = enabled && perm === "granted" ? "Enabled" : "Enable Notifications";
+    }
+
+    function setNotifText(text, err){
+      if(notifState){
+        notifState.textContent = text;
+        notifState.style.color = err ? "rgba(226,59,59,.95)" : "rgba(11,214,162,.95)";
+      }
+      if(notifState2){
+        notifState2.textContent = text;
+        notifState2.style.color = err ? "rgba(226,59,59,.95)" : "rgba(11,214,162,.95)";
+      }
+    }
+
+    /* ============================================================
+       ADMIN-ONLY PUBLIC GALLERY (by URL)
+       Note: Without backend, URLs are stored per-device (localStorage).
+       For true public sync, set PUBLIC_GALLERY_FEED_URL to a hosted JSON.
+    ============================================================ */
+    const GKEY = "ssh_public_gallery_urls_v1";
+    const strip = $("#galleryStrip");
+    const adminGalleryTools = $("#adminGalleryTools");
+    const addPhotoUrlBtnTop = $("#addPhotoUrlBtnTop");
+    const clearGalleryBtnTop = $("#clearGalleryBtnTop");
+
+    const addPhotoUrlBtn = $("#addPhotoUrlBtn");
+    const exportGalleryBtn = $("#exportGalleryBtn");
+    const clearGalleryBtn = $("#clearGalleryBtn");
+    const galleryAdminStatus = $("#galleryAdminStatus");
+
+    function getStoredGalleryUrls(){
+      return JSON.parse(localStorage.getItem(GKEY) || "[]");
+    }
+    function setStoredGalleryUrls(urls){
+      localStorage.setItem(GKEY, JSON.stringify(urls));
+    }
+
+    async function fetchPublicGalleryFeed(){
+      if(!PUBLIC_GALLERY_FEED_URL) return [];
+      try{
+        const res = await fetch(PUBLIC_GALLERY_FEED_URL, { cache:"no-store" });
+        if(!res.ok) return [];
+        const data = await res.json();
+        if(Array.isArray(data)) return data.filter(x => typeof x === "string");
+        return [];
+      }catch(_){
+        return [];
+      }
+    }
+
+    function addGalleryCard(url, label, allowRemove){
+      const card = document.createElement("div");
+      card.className = "ph";
+
+      const img = document.createElement("img");
+      img.src = url;
+      img.alt = label;
+
+      const lab = document.createElement("div");
+      lab.className = "label";
+      lab.textContent = label;
+
+      card.appendChild(img);
+      card.appendChild(lab);
+
+      if(allowRemove){
+        const remove = document.createElement("div");
+        remove.className = "remove";
+        remove.title = "Remove photo";
+        remove.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const stored = getStoredGalleryUrls();
+          const idx = stored.findIndex(u => u === url);
+          if(idx >= 0){
+            stored.splice(idx, 1);
+            setStoredGalleryUrls(stored);
+            loadGallery();
+          }
+        });
+        card.appendChild(remove);
+      }
+
+      strip.appendChild(card);
+    }
+
+    let autoSwipeTimer = null;
+    function startAutoSwipe(){
+      if(autoSwipeTimer) clearInterval(autoSwipeTimer);
+      autoSwipeTimer = setInterval(() => {
+        if(!strip) return;
+        const maxScroll = strip.scrollWidth - strip.clientWidth;
+        if(maxScroll <= 0) return;
+
+        const step = Math.min(strip.clientWidth * 0.85, 380);
+        const next = strip.scrollLeft + step;
+
+        if(next >= maxScroll - 4){
+          strip.scrollTo({ left: 0, behavior: "smooth" });
+        } else {
+          strip.scrollTo({ left: next, behavior: "smooth" });
+        }
+      }, 3200);
+    }
+
+    async function loadGallery(){
+      if(!strip) return;
+
+      // Merge feed URLs (public) + admin added URLs (local)
+      const feedUrls = await fetchPublicGalleryFeed();
+      const localUrls = getStoredGalleryUrls();
+      const urls = [...feedUrls, ...localUrls];
+
+      strip.innerHTML = "";
+
+      if(!urls.length){
+        strip.innerHTML = `
+          <div class="ph"><div class="label">Hospital</div></div>
+          <div class="ph"><div class="label">Doctors</div></div>
+          <div class="ph"><div class="label">Facilities</div></div>
+          <div class="ph"><div class="label">Care</div></div>
+        `;
+        startAutoSwipe();
+        return;
+      }
+
+      urls.forEach((url, i) => addGalleryCard(url, "Photo " + (i + 1), isAdmin));
+      startAutoSwipe();
+    }
+
+    function addPhotoByUrl(){
+      if(!isAdmin){
+        if(galleryAdminStatus){
+          galleryAdminStatus.textContent = "Only admin can add photos.";
+          galleryAdminStatus.style.color = "rgba(226,59,59,.95)";
+        }
+        return;
+      }
+      const url = prompt("Paste Image URL (must start with http/https):");
+      if(!url) return;
+      const clean = url.trim();
+
+      if(!/^https?:\/\/.+/i.test(clean)){
+        alert("Invalid URL. Must start with http/https.");
+        return;
+      }
+
+      const stored = getStoredGalleryUrls();
+      stored.unshift(clean);
+      setStoredGalleryUrls(stored);
+
+      if(galleryAdminStatus){
+        galleryAdminStatus.textContent = "Photo added to gallery.";
+        galleryAdminStatus.style.color = "rgba(11,214,162,.95)";
+      }
+
+      loadGallery();
+    }
+
+    addPhotoUrlBtn?.addEventListener("click", addPhotoByUrl);
+    addPhotoUrlBtnTop?.addEventListener("click", addPhotoByUrl);
+
+    function clearGallery(){
+      if(!isAdmin) return;
+      localStorage.removeItem(GKEY);
+      if(galleryAdminStatus){
+        galleryAdminStatus.textContent = "Gallery cleared (local).";
+        galleryAdminStatus.style.color = "rgba(226,59,59,.95)";
+      }
+      loadGallery();
+    }
+
+    clearGalleryBtn?.addEventListener("click", clearGallery);
+    clearGalleryBtnTop?.addEventListener("click", clearGallery);
+
+    exportGalleryBtn?.addEventListener("click", () => {
+      if(!isAdmin) return;
+      const items = getStoredGalleryUrls();
+      const blob = new Blob([JSON.stringify(items, null, 2)], { type:"application/json;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "swastik_gallery_urls.json";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    });
+
+    /* ============================================================
+       lockAdminUI: show/hide admin tools + re-render gallery for remove buttons
+    ============================================================ */
+    function lockAdminUI(){
+      // Events admin UI
+      if(eventAdminBox) eventAdminBox.style.display = isAdmin ? "block" : "none";
+      if(eventAdminTools) eventAdminTools.style.display = isAdmin ? "flex" : "none";
+
+      // Gallery tools (top)
+      if(adminGalleryTools) adminGalleryTools.style.display = isAdmin ? "flex" : "none";
+
+      // Re-render gallery so remove icons appear only for admin
+      loadGallery();
+    }
+
+    /* ============================================================
+       Announcement buttons
+    ============================================================ */
+    subscribeFromAnnounce?.addEventListener("click", enableNotifications);
+    $("#openPanelFromAnnounce")?.addEventListener("click", openPanel);
+
+    /* ============================================================
+       Appointments (offline list)
+    ============================================================ */
+    const AKEY = "ssh_appointments_v1";
+    const apptForm = $("#apptForm");
+    const formStatus = $("#formStatus");
+    const apptTbody = $("#apptTbody");
+    const apptCount = $("#apptCount");
+
+    function getAppts(){ return JSON.parse(localStorage.getItem(AKEY) || "[]"); }
+    function setAppts(items){ localStorage.setItem(AKEY, JSON.stringify(items)); }
+
+    function renderAppts(){
+      const items = getAppts();
+      apptTbody.innerHTML = "";
+
+      items.forEach((a) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${escapeHtml(a.date)}</td>
+          <td>${escapeHtml(a.time)}</td>
+          <td>${escapeHtml(a.name)}</td>
+          <td>${escapeHtml(a.phone)}</td>
+          <td>${escapeHtml(a.dept)}</td>
+          <td>${escapeHtml(a.message || "")}</td>
+        `;
+        apptTbody.appendChild(tr);
+      });
+
+      apptCount.textContent = String(items.length);
+    }
+
+    apptForm?.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const data = {
+        id: cryptoRandom(),
+        name: $("#name").value.trim(),
+        phone: $("#phone").value.trim(),
+        dept: $("#dept").value,
+        email: $("#email").value.trim(),
+        date: $("#date").value,
+        time: $("#time").value,
+        message: $("#message").value.trim(),
+        createdAt: Date.now()
+      };
+
+      if(!data.name || !data.phone || !data.dept || !data.date || !data.time){
+        formStatus.textContent = "Please fill all required fields.";
+        formStatus.style.color = "rgba(226,59,59,.95)";
+        return;
+      }
+
+      const items = getAppts();
+      items.unshift(data);
+      setAppts(items);
+
+      apptForm.reset();
+      formStatus.textContent = "Appointment saved (offline). Our team will contact you.";
+      formStatus.style.color = "rgba(11,214,162,.95)";
+      renderAppts();
+    });
+
+    $("#clearApptBtn")?.addEventListener("click", () => {
+      localStorage.removeItem(AKEY);
+      renderAppts();
+      formStatus.textContent = "Appointments cleared (offline).";
+      formStatus.style.color = "rgba(226,59,59,.95)";
+    });
+
+    $("#exportCsvBtn")?.addEventListener("click", () => {
+      const items = getAppts();
+      const header = ["Date","Time","Name","Phone","Department","Email","Message"];
+      const rows = items.map(a => [
+        a.date, a.time, a.name, a.phone, a.dept, a.email || "", (a.message || "").replaceAll("\n"," ")
+      ]);
+
+      const csv = [header, ...rows]
+        .map(r => r.map(v => `"${String(v).replaceAll('"','""')}"`).join(","))
+        .join("\n");
+
+      const blob = new Blob([csv], { type:"text/csv;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "swastik_appointments.csv";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    });
+
+    /* ============================================================
+       Init
+    ============================================================ */
+    // If video not found, hide it (keeps overlay gradient)
+    const heroVideo = $("#heroVideo");
+    heroVideo?.addEventListener("error", () => heroVideo.remove());
+
+    renderAppts();
+    renderEvents();
+    updateNotifUI();
+    loadGallery();
+
+  </script>
+</body>
+</html>
